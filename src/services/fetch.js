@@ -10,10 +10,11 @@ export const fetchRandomFact = (url, handleFact) => {
 }
 
 export const fetchCatFact = (url, fact, handleCat) => {
-  fetch(`${url}${fact}`)
+  const base = 'https://cataas.com'
+  fetch(`${url}${fact}?json=true`)
     .then((res) => res.json())
     .then((data) => {
-      const cat = data?.config?.url
-      handleCat(cat)
+      const { url } = data
+      handleCat(`${base}${url}`)
     })
 }

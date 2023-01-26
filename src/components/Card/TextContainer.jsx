@@ -1,7 +1,7 @@
 const TextContainer = ({ fact }) => {
   return (
-    <section>
-      <h2>Phrase from query: {fact}</h2>
+    <section className="text-2xl font-bold">
+      {fact ? <p>The fact is: {fact}</p> : <p>Loading fact...</p>}
     </section>
   )
 }

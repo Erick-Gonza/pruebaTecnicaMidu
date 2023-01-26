@@ -1,7 +1,7 @@
 const ImageContainer = ({ cat }) => {
   return (
-    <section>
-      <img src={cat} />
+    <section className="w-full h-auto rounded-md">
+      {cat ? <img src={cat} className="rounded-md" /> : <p>Loading cat...</p>}
     </section>
   )
 }

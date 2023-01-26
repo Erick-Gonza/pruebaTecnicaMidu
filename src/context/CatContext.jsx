@@ -19,19 +19,22 @@ const CatContext = ({ children }) => {
     setCat(cat)
   }
 
+  const handleNewFact = () => {
+    fetchRandomFact(baseUrlFact, handleFact)
+  }
+
   useEffect(() => {
     fetchRandomFact(baseUrlFact, handleFact)
   }, [])
 
   useEffect(() => {
-    !fact && fetchCatFact(baseUrlCat, fact, handleCat)
-    console.log(fact)
-    console.log(cat)
+    fact && fetchCatFact(baseUrlCat, fact, handleCat)
   }, [fact])
 
   const catContextData = {
     fact,
-    cat
+    cat,
+    handleNewFact
   }
 
   return <Provider value={catContextData}>{children}</Provider>
