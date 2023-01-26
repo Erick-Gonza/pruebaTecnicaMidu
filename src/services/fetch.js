@@ -1,16 +1,19 @@
-// import axios from 'axios'
-// import { getRandomInt } from '../utils/getRandomInt'
+import { getRandomInt } from '../utils/getRandomInt'
 
-// export const fetchFactApi = async (base_url) => {
-//   const response = await axios
-//     .get(base_url)
-//     .then((response) => response.data)
-//     .then((data) => data?.data[getRandomInt(0, 10)])
-//     .then((data) => {
-//       return (response = data?.fact?.split(' ')[0])
-//     })
-// }
+export const fetchRandomFact = (url, handleFact) => {
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const fact = data?.data[getRandomInt(0, 10)]?.fact?.split(' ')[0]
+      handleFact(fact)
+    })
+}
 
-// export const fetchImageApi = (url) => {
-//   return axios.get(url).then((res) => res.data)
-// }
+export const fetchCatFact = (url, fact, handleCat) => {
+  fetch(`${url}${fact}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const cat = data?.config?.url
+      handleCat(cat)
+    })
+}

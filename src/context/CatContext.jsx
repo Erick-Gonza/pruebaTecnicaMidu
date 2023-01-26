@@ -1,36 +1,32 @@
-import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
-import { getRandomInt } from '../utils/getRandomInt'
+import { fetchCatFact, fetchRandomFact } from '../services/fetch'
 
 export const catFactContext = createContext()
 const { Provider } = catFactContext
 
 const CatContext = ({ children }) => {
-  const [fact, setFact] = useState('')
-  const [cat, setCat] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [fact, setFact] = useState()
+  const [cat, setCat] = useState()
 
-  const urlFact = 'https://catfact.ninja/facts'
-  const urlCat = 'https://cataas.com/cat/says/'
+  const baseUrlFact = 'https://catfact.ninja/facts'
+  const baseUrlCat = 'https://cataas.com/cat/says/'
 
-  const handleFactChange = (data) => {
-    setFact(data)
-    setIsLoading(false)
+  const handleFact = (fact) => {
+    setFact(fact)
+  }
+
+  const handleCat = (cat) => {
+    setCat(cat)
   }
 
   useEffect(() => {
-    axios
-      .get(urlFact)
-      .then((response) => response.data)
-      .then((data) => data?.data[getRandomInt(0, 10)])
-      .then((data) => handleFactChange(data?.fact?.split(' ')[0]))
+    fetchRandomFact(baseUrlFact, handleFact)
   }, [])
 
   useEffect(() => {
-    !isLoading &&
-      axios
-        .get(`${urlCat}${fact}`)
-        .then((response) => setCat(response?.config?.url))
+    !fact && fetchCatFact(baseUrlCat, fact, handleCat)
+    console.log(fact)
+    console.log(cat)
   }, [fact])
 
   const catContextData = {
